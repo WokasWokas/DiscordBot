@@ -20,6 +20,6 @@ async def on_message(message):
     else:
         calculations.logger(message.author, f"Message - {message.content}")
         return
-    calculations.logger(message.author, f"Command - {message.content}")
+    calculations.logger(message.author.name, message.content)
 
 client.run( config.token )
