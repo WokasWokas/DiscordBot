@@ -1,10 +1,14 @@
 import time
+import os
 
-def time_zone(zone):
+def clear():
+    os.system('clear')
+
+def zone(zone=1): 
     return 3600 * zone
 
-def get_time():
-    return time.strftime("%d %B %H:%M:%S", time.gmtime(time.time() + time_zone(3)))
+def Time():
+    return time.strftime("%d %B %H:%M:%S", time.gmtime(time.time() + zone(3)))
 
 def logger(system, message):
-    print(f"{get_time()} - {system.name} :::: {message}")
+    print(f"{Time()} - {system} :: {message}")
