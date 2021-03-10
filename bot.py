@@ -17,9 +17,6 @@ async def on_message(message):
         await message.channel.send(f"Time: {calculations.Time()}")
     elif message.content == "!ping":
         await message.channel.send("pong")
-    else:
-        calculations.logger(message.author, f"Message - {message.content}")
-        return
     calculations.logger(message.author.name, message.content)
 
 client.run( config.token )
