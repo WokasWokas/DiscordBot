@@ -1,8 +1,12 @@
 import time
+import sys
 import os
 
 def clear():
-    os.system('clear')
+    if sys.platform() == 'linux' :
+        os.system('clear')
+    elif sys.platform() == 'win32':
+        os.system('clr')
 
 def zone(zone=1): 
     return 3600 * zone
