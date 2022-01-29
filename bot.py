@@ -1,22 +1,27 @@
-import discord
-import config
-import calculations
+import discord, iodatabase, classes, random, time, config
+seed = str(time.time())
+random.seed(version=seed)
+
+def init_log():
+    timestamp = time.strftime("%y-%m-%d+%H-%M-%S")
+    log = iodatabase.create_connection(timestamp)
+    iodatabase.create_table(log, 'log')
+    return log
 
 client = discord.Client()
+log = init_log()
 
 @client.event
 async def on_ready():
-    calculations.clear()
-    calculations.logger(client.user, "Connected to the server!")
+    iodatabase.execute(log, classes.DataLog(type="system", channel=None, 
+                                            user=client.user, content="Bot started!"))
 
 @client.event
-async def on_message(message):
+async def on_message(message: discord.Message):
     if message.author.name == client.user.name:
         return
-    if message.content == "!time":
-        await message.channel.send(f"Time: {calculations.Time()}")
-    elif message.content == "!ping":
-        await message.channel.send("pong")
-    calculations.logger(message.author.name, message.content)
+    iodatabase.execute(log, classes.DataLog(type="message", channel=message.channel.name, 
+                                            user=message.author, content=message.content))
+
 
 client.run( config.token )
